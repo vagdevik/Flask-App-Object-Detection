@@ -4,7 +4,7 @@
 
 * Clone/Download this folder.
 
-* `cd Flask-ObjDetect`
+* `cd Flask-ObjDetect` 
 
 * Run `pip install -r requirements.txt`
 

@@ -4,12 +4,7 @@ import cv2 as cv2
 print("cv2 version:",cv2.__version__)
 import os
 
-import matplotlib.pyplot as plt
 
-
-
-def fixColor(filepath):
-    return(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
 
 def get_detected_image(image, filename):
 
@@ -59,14 +54,12 @@ def get_detected_image(image, filename):
 
 	        # extract the pixel-wise segmentation for the object,       
 	        mask = masks[i, classID]
-	        # plt.imshow(mask)
-	        # plt.show()
-	        # print ("Shape of individual mask", mask.shape)
+
 	        
 	        # resize the mask such that it's the same dimensions of
 	        # the bounding box, and interpolation gives individual pixel positions
 	        mask = cv2.resize(mask, (boxW, boxH), interpolation=cv2.INTER_CUBIC)
-	        # print ("Mask after resize", mask.shape)
+
 	        # then finally threshold to create a *binary* mask
 	        mask = (mask > threshold)
 	        # print ("Mask after threshold", mask.shape)
@@ -74,7 +67,7 @@ def get_detected_image(image, filename):
 	        # extract the ROI of the image but *only* extracted the
 	        # masked region of the ROI
 	        roi = img[startY:endY, startX:endX][mask]
-	        # print ("ROI Shape", roi.shape)
+
 	        # grab the color used to visualize this particular class,
 	        # then create a transparent overlay by blending the color
 	        # with the ROI
@@ -86,11 +79,11 @@ def get_detected_image(image, filename):
 
 	        color = COLORS[classID]
 	        color = [int(c) for c in color]
-	        # print (LABELS[classID], color)
 	        detected_objects.append(LABELS[classID])
 	        cv2.rectangle(img, (startX, startY), (endX, endY), color, 2)
 	        text = "{}: {:.4f}".format(LABELS[classID], confidence)
 	        cv2.putText(img, text, (startX, startY - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+	        
 	cv2.imwrite(os.path.join(OUTPUT_PATH, filename), img)
 	return ", ".join(detected_objects)
 	
